@@ -8,6 +8,15 @@ window = tk.Tk()
 # Initialize Tikinter variables
 fromFileTypeStr = tk.StringVar()
 toFileTypeStr = tk.StringVar()
+fromFileNameStr = tk.StringVar()
+
+def getFile():
+    #Getting the file name and storing it as an attribute to the window object
+    window.filename = filedialog.askopenfilename(initialdir="/", title="Select file to convert")
+    fromFileNameStr.set(window.filename)
+    for i in range(len(window.filename) - 1, -1, -1):
+        if(window.filename[i] == '.'):
+            fromFileTypeStr.set(window.filename[i:len(window.filename)])
 
 # Intialize filetype options
 fileTypes = [
@@ -29,6 +38,7 @@ window.grid_columnconfigure(0, weight=1)
 
 # Center the optionsFrame widgets
 fromFileType = tk.OptionMenu(optionsFrame, fromFileTypeStr, *fileTypes)
+fromFileType.configure(state="disabled")
 fromFileType.grid(row=1, column=0, sticky="ew")
 
 tk.Label(optionsFrame, text=" to ", font=("Arial", 15), bg="gray23", fg='white').grid(row=1, column=1)
@@ -42,11 +52,13 @@ optionsFrame.grid_columnconfigure(2, weight=1)
 
 tk.Label(optionsFrame, bg='gray23').grid(row=2, column=1)
 
-fileUploadButton = tk.Button(optionsFrame, text="Choose file to upload")
+fileUploadButton = tk.Button(optionsFrame, text="Choose file to upload", command=getFile)
 fileUploadButton.grid(row=3, column=1)
 
 convertButton = tk.Button(window, text="Convert!", font=("Arial", 15))
 convertButton.grid(row=2, column=0)
+
+tk.Label(window, textvariable=fromFileNameStr).grid(row=3, column=0)
 
 # Enter the mainloop()
 window.mainloop()
