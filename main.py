@@ -1,16 +1,37 @@
-# This is a sample Python script.
+import tkinter as tk
+import PIL.ImageTk
+from PIL import Image, ImageTk
+from tkinter import filedialog
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+#Initialize the main window
+window = tk.Tk()
 
+#Initalize Tikinter variables
+fromFileTypeStr = tk.StringVar()
+toFileTypeStr = tk.StringVar()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+#Intialize filetype options
+fileTypes = [
+    ".png",
+    ".jpg"
+]
 
+#Set window state
+window.geometry("750x750")
+window.title("File Converter")
+icon = tk.PhotoImage(file = "logo_transparent.png")
+window.iconphoto(True, icon)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharms')
+#Initialze widgets and pack into window
+optionsFrame = tk.LabelFrame(window, text="Frame", padx=50, pady=50)
+optionsFrame.pack()
+fromFileType = tk.OptionMenu(optionsFrame, fromFileTypeStr, *fileTypes)
+fromFileType.grid(row=0, column=0)
+toFileType = tk.OptionMenu(optionsFrame, toFileTypeStr, *fileTypes)
+toFileType.grid(row=-0, column=1)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+fileUploadButton = tk.Button(window, text="Choose file to upload", padx=20, pady=20)
+fileUploadButton.pack()
+
+#Enter the mainloop()
+window.mainloop()
